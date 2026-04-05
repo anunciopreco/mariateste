@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="TECHPRO Loja Express - Os melhores periféricos gamer com entrega rápida em Recife-PE.">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>TECHPRO • E-commerce Profissional</title>
+
+    <!-- Preconnect para performance -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --surface: rgba(255, 255, 255, 0.9);
+            --surface-dark: rgba(15, 23, 42, 0.9);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+            --radius: 16px;
+            --radius-lg: 24px;
+        }
+        
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior: contain;
+        }
+        
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .glass { 
+            background: var(--surface); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        
+        .glass-dark {
+            background: var(--surface-dark);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        /* Animações do Carrinho */
+        .cart-overlay { 
+            display: none; 
+            background: rgba(15, 23, 42, 0.6); 
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .cart-overlay.active { display: block; opacity: 1; }
+        
+        .cart-sheet {
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+            will-change: transform;
+        }
+        .cart-overlay.active .cart-sheet { transform: translateY(0); }
+
+        /* Categorias com efeito hover */
+        .category-pill {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, background, box-shadow;
+        }
+        .category-pill.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+            transform: translateY(-1px);
+        }
+        .category-pill:not(.active):hover {
+            background: #f1f5f9;
+            color: #334155;
+            transform: translateY(-1px);
+        }
+
+        /* Cards de Produto Premium */
+        .product-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, box-shadow;
+            background: white;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        .product-card:active {
+            transform: scale(0.98);
+            transition-duration: 0.1s;
+        }
+        
+        /* Imagens com efeito zoom */
+        .product-img {
+            transition: transform 0.4s ease;
+        }
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        /* Botões com efeito premium */
+        .btn-press { 
+            transition: all 0.15s ease;
+            will-change: transform;
+        }
+        .btn-press:active { 
+            transform: scale(0.96); 
+        }
+        .btn-press:disabled { 
+            opacity: 0.5; 
+            cursor: not-allowed; 
+            transform: none; 
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #16a34a);
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
+        }
+        .btn-success:hover {
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.6);
+        }
+
+        /* Toast Notification Premium */
+        .toast {
+            transform: translateY(-30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .toast.hide {
+            opacity: 0;
+            transform: translateY(-30px) scale(0.95);
+        }
+
+        /* Badge de Frete Animado */
+        .shipping-badge {
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            animation: badge-pop 0.3s ease-out;
+        }
+        @keyframes badge-pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .shipping-base { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; }
+        .shipping-extra { background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #9a3412; }
+
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: var(--radius);
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Acessibilidade */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+        }
+        :focus-visible { 
+            outline: 2px solid var(--primary); 
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+        button, input, a { outline: none; }
+
+        /* Animações de Entrada */
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fade-in-up 0.4s ease-out; }
+        
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+
+        /* Efeito de brilho no botão de ação */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+            pointer-events: none;
+        }
+        .btn-glow:active::after {
+            transform: scale(1);
+            transition-duration: 0.2s;
+        }
+
+        /* Safe area */
+        @supports (padding: max(0px)) {
+            .safe-pb { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+            .safe-pt { padding-top: max(0, env(safe-area-inset-top)); }
+        }
+
+        /* Efeito de confete para ações positivas */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            animation: confetti-fall 3s ease-out forwards;
+            z-index: 1000;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ===== 📐 EXPANSÃO RESPONSIVA PARA DESKTOP ===== */
+        @media (min-width: 640px) {
+            main { 
+                border-radius: 32px; 
+                margin: 24px auto !important;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2) !important;
+                background: rgba(255, 255, 255, 0.95) !important;
+            }
+            header {
+                border-radius: 32px 32px 0 0 !important;
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+            #category-list {
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+            #product-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 16px !important;
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+            .product-card { padding: 6px !important; border-radius: 20px !important; }
+            .cart-sheet { max-width: 580px !important; border-radius: 32px 32px 0 0 !important; }
+        }
+
+        @media (min-width: 1024px) {
+            main { max-width: 1100px !important; }
+            #product-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 20px !important; }
+            .product-img { aspect-ratio: 4/3; }
+            .cart-sheet { max-width: 650px !important; }
+            header { padding-left: 32px !important; padding-right: 32px !important; }
+            #category-list { padding-left: 32px !important; padding-right: 32px !important; }
+        }
+
+        /* Mobile Only Fixes */
+        @media (max-width: 639px) {
+            .product-card { padding: 3px; }
+            .cart-sheet { border-radius: 28px 28px 0 0; }
+            #btn-calc-frete span { display: none; }
+            input, select, textarea, button { font-size: 16px !important; min-height: 48px; }
+            .nav-text { display: none; }
+            .nav-icon { margin-bottom: 0 !important; font-size: 20px !important; }
+        }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <!-- Toast Notification Premium -->
+    <div id="toast" class="toast fixed top-6 left-1/2 -translate-x-1/2 z-[100] opacity-0 pointer-events-none" role="alert" aria-live="polite">
+        <div class="bg-slate-900/95 text-white px-5 py-3.5 rounded-2xl shadow-2xl text-sm font-semibold flex items-center gap-3 glass-dark">
+            <i id="toast-icon" class="fa-solid fa-circle-check text-green-400 text-lg" aria-hidden="true"></i>
+            <span id="toast-msg">Item adicionado!</span>
+        </div>
+    </div>
+
+    <!-- Container Principal -->
+    <main class="w-full max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto min-h-screen bg-white/80 shadow-2xl relative pb-24 safe-pb backdrop-blur-sm" role="main">
+        
+        <!-- Header Premium -->
+        <header class="sticky top-0 z-40 glass border-b border-slate-200/50 px-6 py-5 safe-pt">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                        <i class="fa-solid fa-microchip text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-black tracking-tight text-slate-900">
+                            TECH<span class="text-blue-600">PRO</span>
+                        </h1>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Gamer Store</p>
+                    </div>
+                </div>
+                
+                <button 
+                    onclick="app.navigation.openCart()" 
+                    class="relative h-11 w-11 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition btn-press shadow-sm"
+                    aria-label="Abrir carrinho de compras"
+                    aria-haspopup="dialog"
+                >
+                    <i class="fa-solid fa-cart-shopping text-base" aria-hidden="true"></i>
+                    <span 
+                        id="cart-count" 
+                        class="absolute -top-1.5 -right-1.5 h-5 min-w-[20px] px-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-lg hidden animate-pulse-soft"
+                        aria-live="polite"
+                    >0</span>
+                </button>
+            </div>
+            
+            <!-- Barra de Busca Premium -->
+            <div class="mt-4 relative group">
+                <label for="search" class="sr-only">Buscar produtos</label>
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition pointer-events-none" aria-hidden="true"></i>
+                <input 
+                    type="search" 
+                    id="search" 
+                    placeholder="Buscar produtos..." 
+                    class="w-full h-11 bg-slate-100/80 rounded-xl pl-11 pr-4 text-sm focus:ring-2 focus:ring-blue-500/30 focus:bg-white outline-none transition border border-transparent focus:border-blue-200"
+                    aria-label="Buscar produtos na loja"
+                >
+            </div>
+        </header>
+
+        <!-- Categorias com Scroll Suave -->
+        <nav class="flex gap-2.5 overflow-x-auto px-6 py-4 scrollbar-hide scroll-smooth" aria-label="Categorias de produtos" id="category-list">
+            <!-- Renderizado via JS -->
+        </nav>
+
+        <!-- Grid de Produtos -->
+        <section class="px-6 sm:px-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4" id="product-grid" aria-label="Lista de produtos">
+            <!-- Renderizado via JS -->
+        </section>
+
+        <!-- Navegação Inferior Premium -->
+        <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md glass border-t border-slate-200/50 px-3 py-2.5 flex justify-between items-center z-40 safe-pb" role="navigation" aria-label="Navegação principal">
+            <button 
+                onclick="app.navigation.goHome()" 
+                class="text-blue-600 flex flex-col items-center gap-1 btn-press flex-1 py-1" 
+                aria-label="Página inicial" 
+                aria-current="page"
+                id="nav-home"
+            >
+                <i class="fa-solid fa-house text-lg nav-icon transition-transform" aria-hidden="true"></i>
+                <span class="text-[9px] font-bold nav-text transition-colors">Início</span>
+            </button>
+            <button 
+                onclick="app.navigation.goFavorites()" 
+                class="text-slate-400 hover:text-pink-500 flex flex-col items-center gap-1 btn-press flex-1 py-1" 
+                aria-label="Ver favoritos"
+                id="nav-favorites"
+            >
+                <i class="fa-solid fa-heart text-lg nav-icon transition-transform" aria-hidden="true"></i>
+                <span class="text-[9px] font-bold nav-text transition-colors">Favoritos</span>
+            </button>
+            <button 
+                onclick="app.navigation.openCart()" 
+                class="bg-gradient-to-r from-blue-500 to-blue-600 h-13 w-13 rounded-full -mt-7 shadow-xl shadow-blue-500/40 text-white flex items-center justify-center border-4 border-white btn-press btn-glow"
+                aria-label="Abrir carrinho"
+                id="nav-cart"
+            >
+                <i class="fa-solid fa-cart-shopping text-lg" aria-hidden="true"></i>
+            </button>
+            <button 
+                onclick="app.navigation.goOrders()" 
+                class="text-slate-400 hover:text-blue-500 flex flex-col items-center gap-1 btn-press flex-1 py-1" 
+                aria-label="Meus pedidos"
+                id="nav-orders"
+            >
+                <i class="fa-solid fa-box text-lg nav-icon transition-transform" aria-hidden="true"></i>
+                <span class="text-[9px] font-bold nav-text transition-colors">Pedidos</span>
+            </button>
+            <button 
+                onclick="app.navigation.goProfile()" 
+                class="text-slate-400 hover:text-blue-500 flex flex-col items-center gap-1 btn-press flex-1 py-1" 
+                aria-label="Meu perfil"
+                id="nav-profile"
+            >
+                <i class="fa-solid fa-user text-lg nav-icon transition-transform" aria-hidden="true"></i>
+                <span class="text-[9px] font-bold nav-text transition-colors">Perfil</span>
+            </button>
+        </nav>
+    </main>
+
+    <!-- Modal do Carrinho Premium -->
+    <div 
+        id="cart-overlay" 
+        class="cart-overlay fixed inset-0 z-50" 
+        role="dialog" 
+        aria-modal="true"
+        aria-labelledby="cart-title"
+        hidden
+    >
+        <div class="cart-sheet absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md sm:max-w-lg md:max-w-xl bg-white rounded-t-[32px] shadow-2xl flex flex-col">
+            
+            <!-- Header do Carrinho -->
+            <div class="px-6 pt-6 pb-4 flex-shrink-0">
+                <button 
+                    onclick="app.navigation.closeCart()" 
+                    class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-5 hover:bg-slate-300 transition btn-press"
+                    aria-label="Fechar carrinho"
+                ></button>
+                
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 id="cart-title" class="text-xl font-black text-slate-900">Meu Carrinho</h2>
+                        <p class="text-xs text-slate-400 font-medium">Confira seus itens e endereço</p>
+                    </div>
+                    <button 
+                        onclick="app.navigation.closeCart()" 
+                        class="bg-slate-100 text-slate-500 px-3.5 py-2 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-blue-600 hover:text-white transition btn-press"
+                        aria-label="Voltar para loja"
+                    >
+                        <i class="fa-solid fa-arrow-left mr-1" aria-hidden="true"></i> Voltar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lista de Itens com Scroll -->
+            <div id="cart-items" class="flex-1 overflow-y-auto px-6 space-y-3 py-2 scroll-smooth" role="list"></div>
+
+            <!-- Cálculo de Frete Premium -->
+            <div class="px-6 py-4 bg-gradient-to-b from-blue-50/50 to-white border-t border-slate-100 flex-shrink-0">
+                <div class="flex items-center gap-2 mb-3">
+                    <h3 class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Calcular Frete</h3>
+                    <span class="text-[8px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-location-dot"></i> Recife-PE
+                    </span>
+                </div>
+                
+                <div class="flex gap-2">
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-location-dot absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input 
+                            type="text" 
+                            id="cep-shipping" 
+                            placeholder="Seu CEP" 
+                            inputmode="numeric"
+                            maxlength="9"
+                            oninput="app.shipping.formatCEP(this)"
+                            class="w-full h-11 bg-white border border-slate-200 rounded-xl pl-10 pr-3 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
+                            aria-label="CEP para cálculo de frete"
+                        >
+                    </div>
+                    <button 
+                        onclick="app.shipping.calculate(document.getElementById('cep-shipping').value)"
+                        id="btn-calc-frete"
+                        class="h-11 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl text-xs font-bold hover:from-blue-600 hover:to-blue-700 active:scale-95 transition flex items-center gap-1 btn-press btn-glow shadow-lg shadow-blue-500/30"
+                        aria-label="Calcular frete"
+                    >
+                        <i class="fa-solid fa-calculator text-xs"></i>
+                        <span>Calcular</span>
+                    </button>
+                </div>
+                
+                <!-- Resultado do Frete com Animação -->
+                <div id="shipping-result" class="mt-3 hidden animate-fade-in-up">
+                    <div class="bg-gradient-to-r from-slate-50 to-blue-50/50 rounded-xl p-3.5 border border-blue-100">
+                        <div class="flex items-start justify-between mb-2.5">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                                    <i class="fa-solid fa-truck-fast text-blue-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-700">
+                                        <span id="shipping-distance">0 km</span> de distância
+                                    </p>
+                                    <p class="text-[9px] text-slate-400" id="shipping-zone">Zona de entrega</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[9px] text-slate-400 uppercase tracking-wide">Frete</p>
+                                <p id="shipping-value" class="text-lg font-black text-blue-600">R$ 0,00</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Badge com Detalhamento -->
+                        <div id="shipping-badge" class="flex items-center gap-2 flex-wrap"></div>
+                        
+                        <!-- Prazo de Entrega -->
+                        <div class="mt-3 pt-3 border-t border-blue-100 flex items-center gap-2">
+                            <i class="fa-regular fa-clock text-slate-400 text-xs"></i>
+                            <span id="shipping-delivery" class="text-[9px] text-slate-500"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Loading com Spinner -->
+                <div id="shipping-loading" class="hidden mt-3 flex items-center gap-2.5 text-slate-400">
+                    <i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-sm"></i>
+                    <span class="text-xs font-medium">Calculando melhor rota...</span>
+                </div>
+                
+                <!-- Dica de Preço -->
+                <p class="text-[8px] text-slate-400 mt-2.5 flex items-center gap-1.5 bg-slate-50 rounded-lg px-2.5 py-2">
+                    <i class="fa-solid fa-circle-info text-blue-400"></i>
+                    Até 3km: <strong class="text-slate-600">R$ 5,00</strong> • Após: <strong class="text-slate-600">+R$ 1,00/km</strong>
+                </p>
+            </div>
+
+            <!-- Endereço de Entrega -->
+            <div class="px-6 py-4 bg-slate-50/80 border-t border-slate-100 flex-shrink-0">
+                <h3 class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-map-pin"></i> Endereço de Entrega
+                </h3>
+                <div class="grid grid-cols-6 gap-2">
+                    <label for="cep" class="sr-only">CEP</label>
+                    <input type="text" id="cep" placeholder="CEP" inputmode="numeric" pattern="[0-9]{8}" maxlength="9"
+                        oninput="app.shipping.formatCEP(this); app.address.search(this.value)" 
+                        class="col-span-2 h-10 bg-white border border-slate-200 rounded-xl px-2.5 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
+                        aria-label="CEP para busca de endereço">
+                    <label for="bairro" class="sr-only">Bairro</label>
+                    <input type="text" id="bairro" placeholder="Bairro" 
+                        class="col-span-4 h-10 bg-white border border-slate-200 rounded-xl px-2.5 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
+                        aria-label="Bairro">
+                    <label for="rua" class="sr-only">Logradouro</label>
+                    <input type="text" id="rua" placeholder="Logradouro" 
+                        class="col-span-4 h-10 bg-white border border-slate-200 rounded-xl px-2.5 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
+                        aria-label="Rua ou avenida">
+                    <label for="numero" class="sr-only">Número</label>
+                    <input type="text" id="numero" placeholder="Nº" inputmode="numeric"
+                        class="col-span-2 h-10 bg-white border border-slate-200 rounded-xl px-2.5 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
+                        aria-label="Número do endereço">
+                </div>
+            </div>
+
+            <!-- Total e Checkout Premium -->
+            <div class="p-6 border-t border-slate-100 flex-shrink-0 bg-gradient-to-t from-white to-slate-50/50">
+                <div class="space-y-2 mb-5">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-500">Subtotal</span>
+                        <span id="cart-subtotal" class="font-semibold">R$ 0,00</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-500">Frete</span>
+                        <span id="cart-shipping" class="font-semibold text-slate-400">A calcular</span>
+                    </div>
+                    <div class="border-t border-slate-200 pt-3 flex items-center justify-between">
+                        <span class="text-slate-900 font-bold text-sm">Total do Pedido</span>
+                        <span id="cart-total" class="text-2xl font-black bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent" aria-live="polite">R$ 0,00</span>
+                    </div>
+                </div>
+                <button 
+                    onclick="app.checkout.finalize()" 
+                    class="w-full h-14 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl shadow-lg shadow-green-500/30 flex items-center justify-center gap-2.5 transition active:scale-95 btn-press btn-glow"
+                    aria-label="Finalizar pedido pelo WhatsApp"
+                >
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span class="font-black uppercase tracking-wider text-sm">Finalizar no WhatsApp</span>
+                </button>
+                <p class="text-[9px] text-slate-400 text-center mt-3 flex items-center justify-center gap-1">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Pagamento seguro • Entrega garantida
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Produto Premium -->
+    <div id="product-modal" class="fixed inset-0 z-[60] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="app.ui.closeProductModal()"></div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md sm:max-w-lg bg-white rounded-t-[32px] p-6 max-h-[88vh] overflow-y-auto animate-fade-in-up">
+            <button onclick="app.ui.closeProductModal()" class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5 hover:bg-slate-300 transition btn-press" aria-label="Fechar"></button>
+            
+            <div class="relative">
+                <img id="modal-img" src="" alt="" class="w-full aspect-square object-cover rounded-2xl mb-5 shadow-lg">
+                <span id="modal-category" class="absolute top-4 left-4 text-[10px] bg-blue-600 text-white font-bold px-3 py-1.5 rounded-full uppercase tracking-wide shadow-lg"></span>
+            </div>
+            
+            <h3 id="modal-title" class="text-lg font-black text-slate-900 mb-2"></h3>
+            <p id="modal-desc" class="text-sm text-slate-600 leading-relaxed mb-5"></p>
+            
+            <div class="flex items-center justify-between mb-5 p-4 bg-slate-50 rounded-xl">
+                <div>
+                    <p class="text-[9px] text-slate-400 uppercase tracking-wide">Preço</p>
+                    <span id="modal-price" class="text-2xl font-black text-blue-600"></span>
+                </div>
+                <span id="modal-shipping-badge" class="shipping-badge shipping-base">Frete a calcular</span>
+            </div>
+            
+            <button id="modal-add-btn" class="w-full h-12 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl font-bold flex items-center justify-center gap-2 btn-press btn-glow shadow-lg">
+                <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+            </button>
+            
+            <div class="mt-4 flex items-center justify-center gap-4 text-[9px] text-slate-400">
+                <span class="flex items-center gap-1"><i class="fa-solid fa-truck"></i> Entrega rápida</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-rotate-left"></i> 7 dias de troca</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        'use strict';
+
+        // ===== CONFIGURAÇÃO PREMIUM =====
+        const CONFIG = {
+            WHATSAPP_NUMBER: '5581996646300',
+            STORAGE_KEYS: { CART: 'techpro_cart', ADDRESS: 'techpro_address', FAVORITES: 'techpro_fav' },
+            SHIPPING_ORIGIN: {
+                cep: '52080340',
+                coords: { lat: -8.01245897278921, lng: -34.91392914130661 },
+                name: 'Recife-PE'
+            },
+            SHIPPING_RULES: {
+                baseDistanceKm: 3,
+                basePrice: 5.00,
+                extraPricePerKm: 1.00,
+                minDeliveryDays: 1,
+                maxDeliveryDays: 5
+            },
+            TOAST_DURATION: 2500,
+            DEBOUNCE_TIME: 300,
+            ANIMATION_DURATION: 400
+        };
+
+        // ===== PRODUTOS PREMIUM COM MAIS DETALHES =====
+        const products = [
+            { 
+                id: 1, name: "Mouse Gamer RGB 12k DPI", price: 149.90, category: "Mouses", 
+                img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&auto=format&fit=crop&q=80", 
+                alt: "Mouse gamer com iluminação RGB",
+                description: "Sensor óptico de alta precisão com até 12.000 DPI ajustável. 6 botões programáveis, iluminação RGB personalizável e switches duráveis para até 50 milhões de cliques. Ergonomia perfeita para longas sessões de jogo.",
+                specs: ["12.000 DPI", "6 botões", "RGB", "50M cliques"]
+            },
+            { 
+                id: 2, name: "Teclado Mecânico Switch Blue", price: 289.00, category: "Teclados", 
+                img: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400&auto=format&fit=crop&q=80", 
+                alt: "Teclado mecânico com switches azuis",
+                description: "Switches mecânicos Blue para feedback tátil e sonoro satisfatório. Teclas anti-ghosting, iluminação RGB por tecla, estrutura em alumínio e cabo reforçado. Ideal para digitação e gaming competitivo.",
+                specs: ["Switch Blue", "Anti-ghosting", "RGB", "Alumínio"]
+            },
+            { 
+                id: 3, name: "Headset 7.1 Surround Pro", price: 345.50, category: "Áudio", 
+                img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&auto=format&fit=crop&q=80", 
+                alt: "Headset gamer com som surround",
+                description: "Som surround virtual 7.1 para imersão total. Drivers de 50mm, microfone retrátil com cancelamento de ruído e almofadas em memory foam. Compatível com PC, PS5, Xbox e mobile via USB ou P2.",
+                specs: ["7.1 Surround", "50mm drivers", "Cancel. ruído", "Multi-plataforma"]
+            },
+            { 
+                id: 4, name: "Monitor 24' 144Hz IPS", price: 1190.00, category: "Monitores", 
+                img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&auto=format&fit=crop&q=80", 
+                alt: "Monitor gamer 144Hz IPS",
+                description: "Painel IPS com cores vibrantes e ângulos de visão amplos. Taxa de atualização de 144Hz e resposta de 1ms para gameplay fluido. FreeSync Premium, ajuste de altura e conexões HDMI/DisplayPort.",
+                specs: ["144Hz", "1ms", "IPS", "FreeSync"]
+            },
+            { 
+                id: 5, name: "SSD 1TB NVMe Gen4", price: 420.00, category: "Hardware", 
+                img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400&auto=format&fit=crop&q=80", 
+                alt: "SSD NVMe de alta velocidade",
+                description: "Leitura de até 7.000 MB/s e gravação de 5.000 MB/s com interface PCIe 4.0. Dissipador de calor integrado, compatível com PS5 e PCs modernos. Ideal para sistemas operacionais, jogos e edição de vídeo.",
+                specs: ["7.000 MB/s", "PCIe 4.0", "1TB", "Dissipador"]
+            },
+            { 
+                id: 6, name: "Webcam Full HD 1080p", price: 199.90, category: "Acessórios", 
+                img: "https://images.unsplash.com/photo-1587827958496-18cc68f8c3cd?w=400&auto=format&fit=crop&q=80", 
+                alt: "Webcam para streaming e calls",
+                description: "Sensor CMOS de 2MP com foco automático e correção de luz. Microfone dual com redução de ruído, ângulo de 90° e clip universal. Plug & play via USB, compatível com Zoom, Teams, OBS e mais.",
+                specs: ["1080p", "Foco auto", "Mic dual", "Plug & play"]
+            }
+        ];
+
+        // ===== ESTADO DA APLICAÇÃO =====
+        const state = {
+            cart: [],
+            favorites: [],
+            activeCategory: 'Todos',
+            searchQuery: '',
+            currentView: 'home',
+            shipping: { calculated: false, value: 0, distance: 0, destination: '', delivery: null }
+        };
+
+        // ===== DOM CACHE OTIMIZADO =====
+        const DOM = {};
+        const cacheElements = () => {
+            const ids = [
+                'toast','toast-msg','toast-icon','cart-overlay','cart-items','cart-count',
+                'cart-subtotal','cart-shipping','cart-total','search','category-list','product-grid',
+                'shipping-result','shipping-value','shipping-distance','shipping-zone','shipping-badge',
+                'shipping-delivery','shipping-loading','btn-calc-frete','product-modal','cep','rua',
+                'bairro','numero','cep-shipping', 'modal-img','modal-title','modal-desc','modal-price',
+                'modal-category','modal-shipping-badge','modal-add-btn'
+            ];
+            
+            ids.forEach(id => {
+                // ✅ CORREÇÃO: Substitui TODOS os hífens, não só o primeiro
+                const key = id.replace(/-/g, '');
+                DOM[key] = document.getElementById(id);
+                if (!DOM[key]) console.warn(`⚠️ Elemento não encontrado: #${id}`);
+            });
+        };
+
+        // ===== APLICAÇÃO PRINCIPAL =====
+        const app = {
+            navigation: {
+                goHome() {
+                    state.currentView = 'home';
+                    app.ui.updateNavActive('home');
+                    app.products.render();
+                    app.ui.showToast('Bem-vindo à TECHPRO! 🎮', 'success');
+                },
+                goFavorites() {
+                    state.currentView = 'favorites';
+                    app.ui.updateNavActive('favorites');
+                    app.products.renderFavorites();
+                },
+                openCart() {
+                    if (DOM.cartoverlay) {
+                        if (state.cart.length === 0 && DOM.cepshipping) {
+                            DOM.cepshipping.value = '';
+                            app.shipping.reset();
+                        }
+                        DOM.cartoverlay.classList.add('active');
+                        DOM.cartoverlay.hidden = false;
+                        document.body.style.overflow = 'hidden';
+                        app.cart.updateUI();
+                        if (navigator.vibrate) navigator.vibrate(10);
+                    }
+                },
+                closeCart() {
+                    if (DOM.cartoverlay) {
+                        DOM.cartoverlay.classList.remove('active');
+                        DOM.cartoverlay.hidden = true;
+                        document.body.style.overflow = '';
+                    }
+                },
+                goOrders() {
+                    state.currentView = 'orders';
+                    app.ui.updateNavActive('orders');
+                    app.ui.showToast('Em breve: Histórico de pedidos! 🚧', 'info');
+                },
+                goProfile() {
+                    state.currentView = 'profile';
+                    app.ui.updateNavActive('profile');
+                    app.ui.showToast('Configurações da conta ⚙️', 'info');
+                },
+                updateNavActive(view) {
+                    ['home', 'favorites', 'orders', 'profile'].forEach(key => {
+                        const btn = document.getElementById(`nav-${key}`);
+                        if (btn) {
+                            const icon = btn.querySelector('i');
+                            if (key === view) {
+                                btn.classList.remove('text-slate-400');
+                                btn.classList.add('text-blue-600');
+                                btn.setAttribute('aria-current', 'page');
+                                if (icon) icon.classList.add('scale-110');
+                            } else {
+                                btn.classList.remove('text-blue-600');
+                                btn.classList.add('text-slate-400');
+                                btn.removeAttribute('aria-current');
+                                if (icon) icon.classList.remove('scale-110');
+                            }
+                        }
+                    });
+                }
+            },
+
+            ui: {
+                showToast(message, type = 'success') {
+                    if (!DOM.toast) return;
+                    const icons = { success: 'fa-circle-check text-green-400', error: 'fa-circle-xmark text-red-400', info: 'fa-circle-info text-blue-400' };
+                    DOM.toastmsg.textContent = message;
+                    DOM.toasticon.className = `fa-solid ${icons[type]} text-lg`;
+                    DOM.toast.classList.remove('hide');
+                    DOM.toast.classList.add('show');
+                    DOM.toast.style.opacity = '1';
+                    setTimeout(() => {
+                        DOM.toast.classList.remove('show');
+                        DOM.toast.classList.add('hide');
+                        DOM.toast.style.opacity = '0';
+                    }, CONFIG.TOAST_DURATION);
+                },
+                createConfetti(x, y) {
+                    const colors = ['#2563eb', '#22c55e', '#f59e0b', '#ef4444', '#8b5cf6'];
+                    for (let i = 0; i < 12; i++) {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.left = `${x + Math.random() * 40 - 20}px`;
+                        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+                        document.body.appendChild(confetti);
+                        setTimeout(() => confetti.remove(), 3000);
+                    }
+                },
+                openProductModal(product) {
+                    DOM.modalimg.src = product.img;
+                    DOM.modalimg.alt = product.alt;
+                    DOM.modaltitle.textContent = product.name;
+                    DOM.modalcategory.textContent = product.category;
+                    DOM.modaldesc.textContent = product.description;
+                    DOM.modalprice.textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
+                    
+                    const badge = DOM.modalshippingbadge;
+                    badge.textContent = 'Frete a calcular';
+                    badge.className = 'shipping-badge shipping-base';
+                    
+                    DOM.modaladdbtn.onclick = () => {
+                        app.cart.add(product.id);
+                        app.ui.closeProductModal();
+                        const rect = DOM.modaladdbtn.getBoundingClientRect();
+                        app.ui.createConfetti(rect.left + rect.width/2, rect.top);
+                    };
+                    
+                    DOM.productmodal.classList.remove('hidden');
+                    DOM.productmodal.hidden = false;
+                    document.body.style.overflow = 'hidden';
+                },
+                closeProductModal() {
+                    DOM.productmodal.classList.add('hidden');
+                    DOM.productmodal.hidden = true;
+                    document.body.style.overflow = '';
+                }
+            },
+
+            products: {
+                render() {
+                    const search = state.searchQuery.toLowerCase().trim();
+                    const filtered = products.filter(p => {
+                        const matchCat = state.activeCategory === 'Todos' || p.category === state.activeCategory;
+                        const matchSearch = !search || p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
+                        return matchCat && matchSearch;
+                    });
+
+                    if (filtered.length === 0) {
+                        DOM.productgrid.innerHTML = `<div class="col-span-2 py-16 text-center text-slate-400 animate-fade-in-up"><i class="fa-solid fa-magnifying-glass text-5xl mb-4 opacity-50"></i><p class="font-bold text-lg">Nenhum produto encontrado</p><p class="text-xs mt-2 text-slate-500">Tente buscar por outro termo ou categoria</p></div>`;
+                        return;
+                    }
+
+                    DOM.productgrid.innerHTML = filtered.map((p, idx) => `
+                        <article class="product-card bg-white rounded-3xl p-3 border border-slate-100 shadow-sm cursor-pointer animate-fade-in-up" style="animation-delay: ${idx * 50}ms" onclick="app.ui.openProductModal(${JSON.stringify(p).replace(/"/g, '&quot;')})">
+                            <div class="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
+                                <img src="${p.img}" alt="${p.alt}" class="w-full h-full object-cover product-img" loading="lazy" width="200" height="200">
+                                <button onclick="event.stopPropagation(); app.cart.add(${p.id})" class="absolute bottom-3 right-3 h-9 w-9 bg-slate-900 text-white rounded-xl flex items-center justify-center btn-press shadow-lg hover:bg-blue-600 transition" aria-label="Adicionar ${p.name} ao carrinho"><i class="fa-solid fa-plus text-xs"></i></button>
+                                ${state.favorites.includes(p.id) ? '<i class="fa-solid fa-heart text-red-500 absolute top-3 left-3 text-sm"></i>' : ''}
+                            </div>
+                            <div class="mt-3 px-0.5">
+                                <h3 class="text-xs font-bold text-slate-800 line-clamp-1" title="${p.name}">${p.name}</h3>
+                                <div class="flex gap-1 mt-1.5">
+                                    ${p.specs?.slice(0,3).map(s => `<span class="text-[8px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">${s}</span>`).join('')}
+                                </div>
+                                <div class="mt-2 flex items-center justify-between">
+                                    <span class="text-sm font-black text-blue-600">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
+                                    <span class="text-[9px] text-slate-400 font-medium">${p.category}</span>
+                                </div>
+                            </div>
+                        </article>
+                    `).join('');
+                },
+                renderFavorites() {
+                    const favs = products.filter(p => state.favorites.includes(p.id));
+                    if (favs.length === 0) {
+                        DOM.productgrid.innerHTML = `<div class="col-span-2 py-16 text-center text-slate-400 animate-fade-in-up"><i class="fa-regular fa-heart text-5xl mb-4 opacity-50"></i><p class="font-bold text-lg">Nenhum favorito ainda</p><p class="text-xs mt-2 text-slate-500">Toque no ❤️ para salvar produtos</p></div>`;
+                        return;
+                    }
+                    DOM.productgrid.innerHTML = favs.map(p => `
+                        <article class="product-card bg-white rounded-3xl p-3 border border-slate-100 shadow-sm cursor-pointer animate-fade-in-up" onclick="app.ui.openProductModal(${JSON.stringify(p).replace(/"/g, '&quot;')})">
+                            <div class="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
+                                <img src="${p.img}" alt="${p.alt}" class="w-full h-full object-cover product-img" loading="lazy">
+                                <button onclick="event.stopPropagation(); app.cart.add(${p.id})" class="absolute bottom-3 right-3 h-9 w-9 bg-slate-900 text-white rounded-xl flex items-center justify-center btn-press shadow-lg hover:bg-blue-600 transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                                <i class="fa-solid fa-heart text-red-500 absolute top-3 left-3 text-sm"></i>
+                            </div>
+                            <div class="mt-3 px-0.5">
+                                <h3 class="text-xs font-bold text-slate-800 line-clamp-1">${p.name}</h3>
+                                <div class="mt-2 flex items-center justify-between">
+                                    <span class="text-sm font-black text-blue-600">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
+                                    <button onclick="event.stopPropagation(); app.products.toggleFavorite(${p.id})" class="text-red-500 btn-press" aria-label="Remover dos favoritos"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </article>
+                    `).join('');
+                },
+                toggleFavorite(id) {
+                    const idx = state.favorites.indexOf(id);
+                    if (idx > -1) { 
+                        state.favorites.splice(idx, 1); 
+                        app.ui.showToast('Removido dos favoritos', 'info'); 
+                    } else { 
+                        state.favorites.push(id); 
+                        app.ui.showToast('Adicionado aos favoritos! ❤️', 'success');
+                        if (navigator.vibrate) navigator.vibrate([20,50,20]);
+                    }
+                    localStorage.setItem(CONFIG.STORAGE_KEYS.FAVORITES, JSON.stringify(state.favorites));
+                    if (state.currentView === 'favorites') this.renderFavorites();
+                }
+            },
+
+            cart: {
+                add(productId) {
+                    const product = products.find(p => p.id === productId);
+                    if (!product) { app.ui.showToast('Produto não encontrado', 'error'); return; }
+                    const existing = state.cart.find(i => i.id === productId);
+                    if (existing) existing.quantity++; else state.cart.push({ ...product, quantity: 1 });
+                    this.save(); this.updateUI(); 
+                    app.ui.showToast(`${product.name} adicionado! 🛒`, 'success');
+                    if (navigator.vibrate) navigator.vibrate([10,30,10]);
+                    const rect = DOM.cartcount?.getBoundingClientRect();
+                    if (rect) app.ui.createConfetti(rect.left, rect.top);
+                },
+                changeQty(productId, delta) {
+                    const item = state.cart.find(i => i.id === productId);
+                    if (!item) return;
+                    item.quantity += delta;
+                    if (item.quantity <= 0) state.cart = state.cart.filter(i => i.id !== productId);
+                    this.save(); this.updateUI();
+                    if (navigator.vibrate) navigator.vibrate(5);
+                },
+                save() {
+                    try { localStorage.setItem(CONFIG.STORAGE_KEYS.CART, JSON.stringify(state.cart)); }
+                    catch (e) { console.error('Erro ao salvar carrinho:', e); }
+                },
+                updateUI() {
+                    const totalQty = state.cart.reduce((a, i) => a + i.quantity, 0);
+                    const subtotal = state.cart.reduce((a, i) => a + i.price * i.quantity, 0);
+                    const shipping = state.shipping.calculated ? state.shipping.value : 0;
+                    const total = subtotal + shipping;
+
+                    DOM.cartcount.textContent = totalQty;
+                    DOM.cartcount.classList.toggle('hidden', totalQty === 0);
+                    DOM.cartsubtotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+                    
+                    if (state.shipping.calculated) {
+                        DOM.cartshipping.textContent = `R$ ${shipping.toFixed(2).replace('.', ',')}`;
+                        DOM.cartshipping.className = 'font-semibold text-blue-600';
+                    } else {
+                        DOM.cartshipping.textContent = 'A calcular';
+                        DOM.cartshipping.className = 'font-semibold text-slate-400';
+                    }
+                    
+                    DOM.carttotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+                    if (state.cart.length === 0) {
+                        DOM.cartitems.innerHTML = `<div class="h-40 flex flex-col items-center justify-center text-slate-400 animate-fade-in-up"><i class="fa-solid fa-cart-shopping text-4xl mb-3 opacity-50"></i><p class="font-bold">Seu carrinho está vazio</p><p class="text-xs text-slate-500 mt-1">Adicione produtos para continuar</p><button onclick="app.navigation.closeCart()" class="mt-4 text-blue-600 text-xs font-bold btn-press hover:underline">Continuar comprando →</button></div>`;
+                        app.shipping.reset();
+                        if (DOM.cepshipping) DOM.cepshipping.value = '';
+                        return;
+                    }
+
+                    DOM.cartitems.innerHTML = state.cart.map((item, idx) => `
+                        <div class="flex items-center gap-3 bg-gradient-to-r from-slate-50 to-white p-3 rounded-xl border border-slate-100 animate-fade-in-up" style="animation-delay: ${idx * 50}ms" role="listitem">
+                            <img src="${item.img}" alt="${item.name}" class="h-16 w-16 rounded-xl object-cover shadow-sm" loading="lazy">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-xs font-bold text-slate-800 truncate">${item.name}</h4>
+                                <p class="text-blue-600 font-black text-sm">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+                            </div>
+                            <div class="flex items-center gap-1.5 bg-white border border-slate-200 rounded-lg p-0.5 shadow-sm">
+                                <button onclick="app.cart.changeQty(${item.id}, -1)" class="w-7 h-7 flex items-center justify-center font-bold text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-md btn-press transition">−</button>
+                                <span class="text-xs font-black w-6 text-center">${item.quantity}</span>
+                                <button onclick="app.cart.changeQty(${item.id}, 1)" class="w-7 h-7 flex items-center justify-center font-bold text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-md btn-press transition">+</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            },
+
+            // ✅ MÓDULO DE FRETE COMPLETAMENTE CORRIGIDO
+            shipping: {
+                cache: {},
+                
+                formatCEP(input) {
+                    let v = input.value.replace(/\D/g, '');
+                    if (v.length > 5) v = v.replace(/(\d{5})(\d)/, '$1-$2');
+                    input.value = v;
+                    return v.replace(/\D/g, '');
+                },
+                
+                reset() {
+                    state.shipping = { calculated: false, value: 0, distance: 0, destination: '', delivery: null };
+                    if (DOM.shippingresult) DOM.shippingresult.classList.add('hidden');
+                    if (DOM.cartshipping) {
+                        DOM.cartshipping.textContent = 'A calcular';
+                        DOM.cartshipping.className = 'font-semibold text-slate-400';
+                    }
+                },
+                
+                haversine(lat1, lon1, lat2, lon2) {
+                    const R = 6371;
+                    const dLat = (lat2-lat1) * Math.PI/180;
+                    const dLon = (lon2-lon1) * Math.PI/180;
+                    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+                    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+                },
+                
+                async getCoords(cep) {
+                    const clean = cep.replace(/\D/g, '');
+                    if (this.cache[clean]) {
+                        console.log('📦 Coordenadas em cache:', this.cache[clean]);
+                        return this.cache[clean];
+                    }
+                    
+                    try {
+                        // ✅ AbortController compatível com navegadores antigos
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 8000);
+                        
+                        const via = await fetch(`https://viacep.com.br/ws/${clean}/json/`, { 
+                            signal: controller.signal 
+                        });
+                        clearTimeout(timeoutId);
+                        
+                        const addr = await via.json();
+                        console.log('📬 ViaCEP response:', addr);
+                        
+                        if (addr.erro || !addr.localidade) {
+                            console.warn('⚠️ CEP não encontrado no ViaCEP');
+                            return this.fallbackCoordsByCEP(clean);
+                        }
+                        
+                        // 🎯 Coordenadas fixas por cidade de PE (evita chamadas externas)
+                        const coordsPE = {
+                            'Recife': { lat: -8.0578, lng: -34.8829 },
+                            'Jaboatão dos Guararapes': { lat: -8.1128, lng: -35.0149 },
+                            'Olinda': { lat: -8.0089, lng: -34.8553 },
+                            'Paulista': { lat: -7.9406, lng: -34.8728 },
+                            'Cabo de Santo Agostinho': { lat: -8.2833, lng: -35.0333 },
+                            'Camaragibe': { lat: -8.0206, lng: -34.9789 },
+                            'São Lourenço da Mata': { lat: -8.0033, lng: -35.0189 },
+                            'Igarassu': { lat: -7.8356, lng: -34.9067 },
+                            'Abreu e Lima': { lat: -7.9031, lng: -34.8989 },
+                        };
+                        
+                        // Prioriza coordenadas de Pernambuco
+                        if (addr.uf === 'PE' && coordsPE[addr.localidade]) {
+                            const coords = { 
+                                ...coordsPE[addr.localidade], 
+                                name: `${addr.logradouro || ''}, ${addr.bairro || ''} - ${addr.localidade}`.trim()
+                            };
+                            this.cache[clean] = coords;
+                            console.log('✅ Coordenadas PE encontradas:', coords);
+                            return coords;
+                        }
+                        
+                        // Fallback para outras capitais do Nordeste
+                        const coordsNE = {
+                            'BA': { lat: -12.9714, lng: -38.5014, city: 'Salvador' },
+                            'AL': { lat: -9.6658, lng: -35.7353, city: 'Maceió' },
+                            'PB': { lat: -7.1195, lng: -34.8450, city: 'João Pessoa' },
+                            'RN': { lat: -5.7945, lng: -35.2110, city: 'Natal' },
+                            'CE': { lat: -3.7172, lng: -38.5433, city: 'Fortaleza' },
+                            'PI': { lat: -5.0892, lng: -42.8019, city: 'Teresina' },
+                            'MA': { lat: -2.5387, lng: -44.2825, city: 'São Luís' },
+                            'SE': { lat: -10.9091, lng: -37.0677, city: 'Aracaju' },
+                        };
+                        
+                        if (coordsNE[addr.uf]) {
+                            const coords = { 
+                                ...coordsNE[addr.uf], 
+                                name: `${addr.localidade}-${addr.uf}` 
+                            };
+                            this.cache[clean] = coords;
+                            console.log('✅ Coordenadas NE encontradas:', coords);
+                            return coords;
+                        }
+                        
+                        // Último fallback: centro do Brasil
+                        const fallback = { lat: -8.05, lng: -34.88, name: 'Região de Recife-PE' };
+                        this.cache[clean] = fallback;
+                        return fallback;
+                        
+                    } catch (e) {
+                        console.error('❌ Erro ao buscar coordenadas:', e.message);
+                        return this.fallbackCoordsByCEP(clean);
+                    }
+                },
+                
+                // ✅ NOVO: Fallback por faixa de CEP (mais preciso que por cidade)
+                fallbackCoordsByCEP(cep) {
+                    const first5 = cep.substring(0, 5);
+                    
+                    // Faixas de CEP da Região Metropolitana do Recife
+                    const ranges = [
+                        { min: '50000', max: '52999', coords: { lat: -8.0578, lng: -34.8829 }, name: 'Recife' },
+                        { min: '53000', max: '54999', coords: { lat: -8.1128, lng: -35.0149 }, name: 'Jaboatão' },
+                        { min: '55000', max: '55999', coords: { lat: -8.2833, lng: -35.0333 }, name: 'Cabo/Região Sul' },
+                        { min: '56000', max: '56999', coords: { lat: -8.0089, lng: -34.8553 }, name: 'Olinda/Zona Norte' },
+                    ];
+                    
+                    for (const range of ranges) {
+                        if (first5 >= range.min && first5 <= range.max) {
+                            console.log(`🎯 Fallback por faixa CEP ${range.min}-${range.max}: ${range.name}`);
+                            return { ...range.coords, name: range.name };
+                        }
+                    }
+                    
+                    // Default para Recife
+                    console.log('🔄 Fallback padrão: Recife-PE');
+                    return { lat: -8.0578, lng: -34.8829, name: 'Recife-PE' };
+                },
+                
+                fallbackCoords(uf, city) {
+                    return this.fallbackCoordsByCEP('00000000');
+                },
+                
+                calcValue(dist) {
+                    const rules = CONFIG.SHIPPING_RULES;
+                    if (dist <= rules.baseDistanceKm) {
+                        return { value: rules.basePrice, isBase: true, extraKm: 0 };
+                    } else {
+                        const extraKm = Math.ceil(dist - rules.baseDistanceKm);
+                        const extraValue = extraKm * rules.extraPricePerKm;
+                        return { value: rules.basePrice + extraValue, isBase: false, extraKm: extraKm };
+                    }
+                },
+                
+                calcDelivery(dist) {
+                    if (dist <= 3) return { min:1, max:2, label:'🚀 Expressa' };
+                    if (dist <= 10) return { min:2, max:3, label:'📦 Padrão' };
+                    if (dist <= 20) return { min:3, max:5, label:'🚚 Regional' };
+                    return { min:5, max:8, label:'🌎 Estendida' };
+                },
+                
+                updateUI(dist, ship, delivery) {
+                    if (!DOM.shippingdistance) return;
+                    
+                    DOM.shippingdistance.textContent = `${dist} km`;
+                    
+                    const zone = DOM.shippingzone;
+                    if (dist <= 3) { 
+                        zone.textContent = '🎯 Zona local • Recife'; 
+                        zone.className = 'text-[9px] text-green-600 font-medium'; 
+                    } else if (dist <= 10) { 
+                        zone.textContent = '🏙️ Zona metropolitana'; 
+                        zone.className = 'text-[9px] text-blue-600 font-medium'; 
+                    } else { 
+                        zone.textContent = '🗺️ Zona regional'; 
+                        zone.className = 'text-[9px] text-orange-600 font-medium'; 
+                    }
+                    
+                    DOM.shippingvalue.textContent = `R$ ${ship.value.toFixed(2).replace('.', ',')}`;
+                    
+                    const extraValue = ship.extraKm * CONFIG.SHIPPING_RULES.extraPricePerKm;
+                    
+                    DOM.shippingbadge.innerHTML = ship.isBase 
+                        ? `<span class="shipping-badge shipping-base">✅ Taxa base</span><span class="text-[8px] text-slate-400">Até 3km</span>`
+                        : `<span class="shipping-badge shipping-base">R$ 5,00</span><span class="shipping-badge shipping-extra">+R$ ${extraValue.toFixed(2)}</span><span class="text-[8px] text-slate-400">(${ship.extraKm}km)</span>`;
+                    
+                    DOM.shippingdelivery.innerHTML = `<strong class="text-slate-700">${delivery.min}-${delivery.max} dia${delivery.max>1?'s':''} úteis</strong> • ${delivery.label}`;
+                },
+                
+                // ✅ FUNÇÃO PRINCIPAL CORRIGIDA COM LOGS E TRATAMENTO DE ERROS
+                async calculate(cepVal) {
+                    console.log('🔍 Iniciando cálculo de frete para:', cepVal);
+                    
+                    const cep = cepVal.replace(/\D/g, '');
+                    
+                    // Validações
+                    if (cep.length !== 8) { 
+                        console.error('❌ CEP inválido:', cep);
+                        app.ui.showToast('CEP inválido (use 8 dígitos)', 'error'); 
+                        return; 
+                    }
+                    if (state.cart.length === 0) { 
+                        console.error('❌ Carrinho vazio');
+                        app.ui.showToast('Adicione itens ao carrinho', 'error'); 
+                        return; 
+                    }
+                    
+                    // UI: Loading state
+                    if (DOM.btncalcfrete) {
+                        DOM.btncalcfrete.disabled = true; 
+                        DOM.btncalcfrete.classList.add('opacity-50', 'cursor-not-allowed');
+                        DOM.btncalcfrete.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Calculando...</span>';
+                    }
+                    if (DOM.shippingloading) DOM.shippingloading.classList.remove('hidden'); 
+                    if (DOM.shippingresult) DOM.shippingresult.classList.add('hidden');
+                    
+                    try {
+                        console.log('📡 Buscando coordenadas para CEP:', cep);
+                        const dest = await this.getCoords(cep);
+                        console.log('📍 Coordenadas destino:', dest);
+                        
+                        if (!dest || !dest.lat || !dest.lng) {
+                            throw new Error('Coordenadas não encontradas');
+                        }
+                        
+                        const origin = CONFIG.SHIPPING_ORIGIN.coords;
+                        console.log('🏠 Origem:', origin);
+                        
+                        const dist = this.haversine(origin.lat, origin.lng, dest.lat, dest.lng);
+                        const distRounded = Math.round(dist * 10) / 10;
+                        console.log('📏 Distância calculada:', distRounded, 'km');
+                        
+                        const ship = this.calcValue(distRounded);
+                        const delivery = this.calcDelivery(distRounded);
+                        console.log('💰 Valor do frete:', ship);
+                        console.log('📅 Prazo de entrega:', delivery);
+                        
+                        // Atualiza estado
+                        state.shipping = { 
+                            calculated: true, 
+                            value: ship.value, 
+                            distance: distRounded, 
+                            destination: dest.name || 'Local calculado', 
+                            delivery 
+                        };
+                        
+                        // Atualiza UI
+                        this.updateUI(distRounded, ship, delivery);
+                        if (DOM.shippingresult) DOM.shippingresult.classList.remove('hidden');
+                        app.cart.updateUI();
+                        
+                        app.ui.showToast('Frete calculado! 🚚', 'success');
+                        if (navigator.vibrate) navigator.vibrate([20,40,20]);
+                        
+                    } catch (e) {
+                        console.error('💥 Erro crítico no cálculo de frete:', e);
+                        app.ui.showToast('Não foi possível calcular o frete. Tente novamente.', 'error');
+                        
+                        // Fallback: mostra frete base
+                        state.shipping = { 
+                            calculated: true, 
+                            value: CONFIG.SHIPPING_RULES.basePrice, 
+                            distance: 3, 
+                            destination: 'Recife-PE', 
+                            delivery: this.calcDelivery(3) 
+                        };
+                        this.updateUI(3, { value: CONFIG.SHIPPING_RULES.basePrice, isBase: true, extraKm: 0 }, state.shipping.delivery);
+                        if (DOM.shippingresult) DOM.shippingresult.classList.remove('hidden');
+                        app.cart.updateUI();
+                        
+                    } finally {
+                        // Restaura UI do botão
+                        if (DOM.btncalcfrete) {
+                            DOM.btncalcfrete.disabled = false; 
+                            DOM.btncalcfrete.classList.remove('opacity-50', 'cursor-not-allowed');
+                            DOM.btncalcfrete.innerHTML = '<i class="fa-solid fa-calculator text-xs"></i> <span>Calcular</span>';
+                        }
+                        if (DOM.shippingloading) DOM.shippingloading.classList.add('hidden');
+                    }
+                }
+            },
+
+            address: {
+                async search(cepVal) {
+                    const cep = cepVal.replace(/\D/g, '');
+                    if (cep.length !== 8) return;
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 8000);
+                        
+                        const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`, { 
+                            signal: controller.signal 
+                        });
+                        clearTimeout(timeoutId);
+                        
+                        const data = await res.json();
+                        if (!data.erro) {
+                            DOM.rua.value = data.logradouro || '';
+                            DOM.bairro.value = data.bairro || '';
+                            DOM.numero.focus();
+                            this.save();
+                        }
+                    } catch (e) { console.error('Erro CEP:', e); }
+                },
+                save() {
+                    try {
+                        localStorage.setItem(CONFIG.STORAGE_KEYS.ADDRESS, JSON.stringify({
+                            cep: DOM.cep.value, rua: DOM.rua.value, bairro: DOM.bairro.value, numero: DOM.numero.value
+                        }));
+                    } catch (e) { console.error('Erro ao salvar endereço:', e); }
+                },
+                load() {
+                    try {
+                        const saved = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.ADDRESS) || '{}');
+                        if (saved.cep) { DOM.cep.value=saved.cep; DOM.rua.value=saved.rua||''; DOM.bairro.value=saved.bairro||''; DOM.numero.value=saved.numero||''; }
+                    } catch (e) { console.error('Erro ao carregar endereço:', e); }
+                }
+            },
+
+            checkout: {
+                finalize() {
+                    if (state.cart.length === 0) { app.ui.showToast('Carrinho vazio!', 'error'); return; }
+                    const { rua, bairro, numero, cep } = { 
+                        rua: DOM.rua.value.trim(), bairro: DOM.bairro.value.trim(), numero: DOM.numero.value.trim(), cep: DOM.cep.value.trim() 
+                    };
+                    if (!rua || !numero || !bairro) { app.ui.showToast('Preencha o endereço!', 'error'); return; }
+                    
+                    app.address.save();
+                    const subtotal = state.cart.reduce((a,i) => a + i.price*i.quantity, 0);
+                    const shipping = state.shipping.calculated ? state.shipping.value : 0;
+                    const total = subtotal + shipping;
+                    
+                    let msg = `*🎮 NOVO PEDIDO - TECHPRO*\n━━━━━━━━━━━━━━\n\n`;
+                    state.cart.forEach(it => { 
+                        msg += `✅ *${it.quantity}x* ${it.name}\n   _R$ ${(it.price*it.quantity).toFixed(2).replace('.',',')}_\n\n`; 
+                    });
+                    
+                    msg += `━━━━━━━━━━━━━━\n📦 *RESUMO:*\n`;
+                    msg += `Subtotal: R$ ${subtotal.toFixed(2).replace('.',',')}\n`;
+                    
+                    if (state.shipping.calculated) {
+                        const dist = state.shipping.distance;
+                        const rules = CONFIG.SHIPPING_RULES;
+                        const extraKm = dist > rules.baseDistanceKm ? Math.ceil(dist - rules.baseDistanceKm) : 0;
+                        const extraValue = extraKm * rules.extraPricePerKm;
+                        const extraText = extraKm > 0 
+                            ? ` (R$ ${rules.basePrice.toFixed(2)} + R$ ${extraValue.toFixed(2)} por ${extraKm}km)` 
+                            : ` (taxa base)`;
+                        
+                        msg += `🚚 Frete (${dist}km): R$ ${shipping.toFixed(2).replace('.',',')}${extraText}\n`;
+                    } else {
+                        msg += `🚚 Frete: *A calcular*\n`;
+                    }
+                    
+                    msg += `\n*💰 TOTAL: R$ ${total.toFixed(2).replace('.',',')}*\n`;
+                    msg += `━━━━━━━━━━━━━━\n📍 *ENTREGA:*\n${rua}, Nº ${numero}\n${bairro} • CEP: ${cep}\n`;
+                    msg += `━━━━━━━━━━━━━━\n_Enviado via TECHPRO App • ${new Date().toLocaleDateString('pt-BR')}_`;
+                    
+                    app.ui.createConfetti(window.innerWidth/2, window.innerHeight/2);
+                    
+                    window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+                }
+            }
+        };
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', () => {
+            cacheElements();
+            try {
+                state.cart = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.CART) || '[]');
+                state.favorites = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.FAVORITES) || '[]');
+            } catch (e) { console.error('Erro ao carregar estado:', e); }
+            
+            app.address.load();
+            
+            // Renderizar categorias com animação
+            const cats = ['Todos', ...new Set(products.map(p => p.category))];
+            DOM.categorylist.innerHTML = cats.map((c, idx) => `
+                <button onclick="state.activeCategory='${c}'; app.products.render(); document.querySelectorAll('.category-pill').forEach(b=>{b.classList.remove('active');b.classList.add('bg-white','text-slate-400','border','border-slate-100')}); this.classList.add('active'); this.classList.remove('bg-white','text-slate-400','border','border-slate-100')" 
+                    class="category-pill ${c==='Todos'?'active':'bg-white text-slate-400 border border-slate-100'} px-5 py-2.5 rounded-xl text-xs font-extrabold whitespace-nowrap btn-press shadow-sm"
+                    style="animation: fade-in-up 0.3s ease-out ${idx * 50}ms both">
+                    ${c}
+                </button>
+            `).join('');
+            
+            app.products.render();
+            app.cart.updateUI();
+            
+            // Busca com debounce
+            let t; DOM.search?.addEventListener('input', e => { 
+                clearTimeout(t); 
+                t = setTimeout(() => { 
+                    state.searchQuery = e.target.value; 
+                    app.products.render(); 
+                }, CONFIG.DEBOUNCE_TIME); 
+            });
+            
+            // Fechar modais com Escape
+            document.addEventListener('keydown', e => { 
+                if(e.key === 'Escape') { 
+                    app.navigation.closeCart(); 
+                    app.ui.closeProductModal(); 
+                } 
+            });
+            
+            // Click outside para fechar modais
+            DOM.productmodal?.addEventListener('click', e => { 
+                if(e.target === DOM.productmodal) app.ui.closeProductModal(); 
+            });
+            DOM.cartoverlay?.addEventListener('click', e => { 
+                if(e.target === DOM.cartoverlay && !e.target.closest('.cart-sheet')) app.navigation.closeCart(); 
+            });
+            
+            // Limpar CEP ao abrir carrinho vazio
+            DOM.cartoverlay?.addEventListener('transitionend', () => {
+                if (DOM.cartoverlay.classList.contains('active') && state.cart.length === 0 && DOM.cepshipping) {
+                    DOM.cepshipping.value = '';
+                    app.shipping.reset();
+                }
+            });
+            
+            // Prevenir zoom em inputs no mobile
+            document.querySelectorAll('input').forEach(input => {
+                input.addEventListener('focus', () => {
+                    if (window.innerWidth < 480) {
+                        document.body.style.zoom = '1.0';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
