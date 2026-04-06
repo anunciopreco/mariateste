@@ -361,7 +361,7 @@
             }
         }
 
-        /* ===== 📱 MOBILE: CARRINHO TELA CHEIA (CORREÇÃO PRINCIPAL) ===== */
+        /* ===== 📱 MOBILE: CARRINHO OTIMIZADO PARA CELULAR ===== */
         @media (max-width: 639px) {
             /* ✅ CARRINHO OCUPA 100% DA TELA NO CELULAR */
             .cart-overlay { 
@@ -390,6 +390,124 @@
                 transform: none !important; 
             }
             
+            /* ✅ HEADER DO CARRINHO MAIS COMPACTO */
+            .cart-sheet > div:first-child {
+                padding: 12px 16px 8px !important;
+            }
+            .cart-sheet > div:first-child h2 {
+                font-size: 1.125rem !important;
+            }
+            .cart-sheet > div:first-child button[aria-label="Fechar carrinho"] {
+                width: 10px !important;
+                height: 1px !important;
+                margin-bottom: 12px !important;
+            }
+            
+            /* ✅ LISTA DE ITENS COM MAIS ESPAÇO */
+            #cart-items {
+                padding: 8px 16px !important;
+                flex: 1 1 auto !important;
+                min-height: 0 !important;
+            }
+            #cart-items > div {
+                padding: 10px !important;
+                margin-bottom: 8px !important;
+            }
+            #cart-items img {
+                height: 56px !important;
+                width: 56px !important;
+            }
+            
+            /* ✅ SEÇÃO DE FRETE COMPACTA E RECOLÍVEL */
+            .shipping-section {
+                padding: 10px 16px !important;
+                background: linear-gradient(to bottom, #f8fafc, #ffffff) !important;
+            }
+            .shipping-section h3 {
+                font-size: 10px !important;
+                margin-bottom: 8px !important;
+            }
+            .shipping-section .flex.gap-2 {
+                gap: 8px !important;
+            }
+            .shipping-section input {
+                height: 40px !important;
+                font-size: 13px !important;
+                padding-left: 32px !important;
+            }
+            .shipping-section button {
+                height: 40px !important;
+                padding: 0 12px !important;
+                font-size: 11px !important;
+            }
+            .shipping-section button span {
+                display: none !important;
+            }
+            
+            /* Resultado do frete mais compacto */
+            #shipping-result {
+                margin-top: 8px !important;
+            }
+            #shipping-result > div {
+                padding: 10px !important;
+            }
+            #shipping-distance, #shipping-value {
+                font-size: 13px !important;
+            }
+            #shipping-zone, #shipping-delivery {
+                font-size: 10px !important;
+            }
+            .shipping-badge {
+                font-size: 9px !important;
+                padding: 2px 8px !important;
+            }
+            
+            /* Dica de preço mais discreta */
+            .shipping-section > p:last-child {
+                font-size: 9px !important;
+                padding: 6px 10px !important;
+                margin-top: 6px !important;
+            }
+            
+            /* ✅ ENDEREÇO COMPACTO */
+            .address-section {
+                padding: 10px 16px !important;
+                background: #f8fafc !important;
+            }
+            .address-section h3 {
+                font-size: 10px !important;
+                margin-bottom: 8px !important;
+            }
+            .address-section input {
+                height: 36px !important;
+                font-size: 12px !important;
+                padding: 0 8px !important;
+            }
+            
+            /* ✅ TOTAL E CHECKOUT FIXO NO FUNDO */
+            .checkout-section {
+                padding: 12px 16px 20px !important;
+                background: linear-gradient(to top, #ffffff, #f8fafc) !important;
+                border-top: 1px solid #e2e8f0 !important;
+                position: sticky;
+                bottom: 0;
+                z-index: 10;
+                box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+            }
+            .checkout-section .space-y-2 {
+                margin-bottom: 12px !important;
+            }
+            .checkout-section .flex.items-center.justify-between {
+                padding: 4px 0 !important;
+            }
+            .checkout-section #cart-total {
+                font-size: 1.25rem !important;
+            }
+            .checkout-section button {
+                height: 48px !important;
+                font-size: 13px !important;
+            }
+            
             /* Esconde texto do botão calcular no mobile */
             #btn-calc-frete span { 
                 display: none; 
@@ -398,7 +516,7 @@
             /* Ajustes de input para mobile */
             input, select, textarea, button { 
                 font-size: 16px !important; 
-                min-height: 48px; 
+                min-height: 44px; 
             }
             
             /* Navegação inferior */
@@ -534,7 +652,7 @@
         </nav>
     </main>
 
-    <!-- Modal do Carrinho Premium -->
+    <!-- Modal do Carrinho Premium - OTIMIZADO PARA MOBILE -->
     <div 
         id="cart-overlay" 
         class="cart-overlay fixed inset-0 z-50" 
@@ -546,7 +664,7 @@
         <div class="cart-sheet absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md sm:max-w-lg md:max-w-xl bg-white rounded-t-[32px] shadow-2xl flex flex-col">
             
             <!-- Header do Carrinho -->
-            <div class="px-6 pt-6 pb-4 flex-shrink-0">
+            <div class="px-6 pt-6 pb-4 flex-shrink-0 border-b border-slate-100">
                 <button 
                     onclick="app.navigation.closeCart()" 
                     class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-5 hover:bg-slate-300 transition btn-press"
@@ -555,8 +673,8 @@
                 
                 <div class="flex items-center justify-between">
                     <div>
-                        <h2 id="cart-title" class="text-xl font-black text-slate-700">Meu Carrinho</h2>
-                        <p class="text-xs text-slate-400 font-medium">Confira seus itens e endereço</p>
+                        <h2 id="cart-title" class="text-xl font-black text-slate-900">Meu Carrinho</h2>
+                        <p class="text-xs text-slate-400 font-medium">Confira seus itens</p>
                     </div>
                     <button 
                         onclick="app.navigation.closeCart()" 
@@ -568,12 +686,12 @@
                 </div>
             </div>
 
-            <!-- Lista de Itens com Scroll -->
-            <div id="cart-items" class="flex-1 overflow-y-auto px-6 space-y-3 py-2 scroll-smooth" role="list"></div>
+            <!-- ✅ Lista de Itens com MAIS ESPAÇO PARA VISUALIZAÇÃO -->
+            <div id="cart-items" class="flex-1 overflow-y-auto px-6 space-y-3 py-3 scroll-smooth" role="list"></div>
 
-            <!-- Cálculo de Frete Premium -->
-            <div class="px-6 py-4 bg-gradient-to-b from-blue-50/50 to-white border-t border-slate-100 flex-shrink-0">
-                <div class="flex items-center gap-2 mb-3">
+            <!-- ✅ Seção de Frete COMPACTA E RECOLÍVEL -->
+            <div class="px-6 py-3 bg-gradient-to-b from-blue-50/30 to-white border-t border-slate-100 flex-shrink-0 shipping-section">
+                <div class="flex items-center justify-between mb-2">
                     <h3 class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Calcular Frete</h3>
                     <span class="text-[8px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
                         <i class="fa-solid fa-location-dot"></i> Recife-PE
@@ -582,128 +700,103 @@
                 
                 <div class="flex gap-2">
                     <div class="relative flex-1">
-                        <i class="fa-solid fa-location-dot absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <i class="fa-solid fa-location-dot absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                         <input 
                             type="text" 
                             id="cep-shipping" 
-                            placeholder="Seu CEP" 
+                            placeholder="CEP" 
                             inputmode="numeric"
                             maxlength="9"
                             oninput="app.shipping.formatCEP(this)"
-                            class="w-full h-11 bg-white border border-slate-200 rounded-xl pl-10 pr-3 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
+                            class="w-full h-10 bg-white border border-slate-200 rounded-lg pl-9 pr-2 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
                             aria-label="CEP para cálculo de frete"
                         >
                     </div>
                     <button 
                         onclick="app.shipping.calculate(document.getElementById('cep-shipping').value)"
                         id="btn-calc-frete"
-                        class="h-11 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl text-xs font-bold hover:from-blue-600 hover:to-blue-700 active:scale-95 transition flex items-center gap-1 btn-press btn-glow shadow-lg shadow-blue-500/30"
+                        class="h-10 px-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg text-xs font-bold hover:from-blue-600 hover:to-blue-700 active:scale-95 transition flex items-center gap-1 btn-press btn-glow shadow-lg shadow-blue-500/20"
                         aria-label="Calcular frete"
                     >
                         <i class="fa-solid fa-calculator text-xs"></i>
-                        <span>Calcular</span>
                     </button>
                 </div>
                 
-                <!-- Resultado do Frete com Animação -->
-                <div id="shipping-result" class="mt-3 hidden animate-fade-in-up">
-                    <div class="bg-gradient-to-r from-slate-50 to-blue-50/50 rounded-xl p-3.5 border border-blue-100">
-                        <div class="flex items-start justify-between mb-2.5">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
-                                    <i class="fa-solid fa-truck-fast text-blue-600 text-sm"></i>
-                                </div>
+                <!-- Resultado do Frete Compacto -->
+                <div id="shipping-result" class="mt-2 hidden animate-fade-in-up">
+                    <div class="bg-gradient-to-r from-slate-50 to-blue-50/30 rounded-lg p-2.5 border border-blue-100">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-truck-fast text-blue-600 text-sm"></i>
                                 <div>
-                                    <p class="text-xs font-bold text-slate-700">
-                                        <span id="shipping-distance">0 km</span> de distância
+                                    <p class="text-[10px] font-bold text-slate-700">
+                                        <span id="shipping-distance">0 km</span>
                                     </p>
-                                    <p class="text-[9px] text-slate-400" id="shipping-zone">Zona de entrega</p>
+                                    <p class="text-[8px] text-slate-400" id="shipping-zone"></p>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <p class="text-[9px] text-slate-400 uppercase tracking-wide">Frete</p>
-                                <p id="shipping-value" class="text-lg font-black text-blue-600">R$ 0,00</p>
+                                <p id="shipping-value" class="text-sm font-black text-blue-600">R$ 0,00</p>
                             </div>
                         </div>
-                        
-                        <!-- Badge com Detalhamento -->
-                        <div id="shipping-badge" class="flex items-center gap-2 flex-wrap"></div>
-                        
-                        <!-- Prazo de Entrega -->
-                        <div class="mt-3 pt-3 border-t border-blue-100 flex items-center gap-2">
-                            <i class="fa-regular fa-clock text-slate-400 text-xs"></i>
-                            <span id="shipping-delivery" class="text-[9px] text-slate-500"></span>
-                        </div>
+                        <div id="shipping-badge" class="flex items-center gap-1 flex-wrap mt-1"></div>
+                        <p id="shipping-delivery" class="text-[8px] text-slate-500 mt-1"></p>
                     </div>
                 </div>
                 
-                <!-- Loading com Spinner -->
-                <div id="shipping-loading" class="hidden mt-3 flex items-center gap-2.5 text-slate-400">
-                    <i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-sm"></i>
-                    <span class="text-xs font-medium">Calculando melhor rota...</span>
+                <!-- Loading Compacto -->
+                <div id="shipping-loading" class="hidden mt-2 flex items-center gap-2 text-slate-400">
+                    <i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-xs"></i>
+                    <span class="text-[10px] font-medium">Calculando...</span>
                 </div>
-                
-                <!-- Dica de Preço -->
-                <p class="text-[8px] text-slate-400 mt-2.5 flex items-center gap-1.5 bg-slate-50 rounded-lg px-2.5 py-2">
-                    <i class="fa-solid fa-circle-info text-blue-400"></i>
-                    Até 3km: <strong class="text-slate-600">R$ 5,00</strong> • Após: <strong class="text-slate-600">+R$ 1,00/km</strong>
-                </p>
             </div>
 
-            <!-- Endereço de Entrega -->
-            <div class="px-6 py-4 bg-slate-50/80 border-t border-slate-100 flex-shrink-0">
-                <h3 class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-map-pin"></i> Endereço de Entrega
+            <!-- Endereço Compacto -->
+            <div class="px-6 py-3 bg-slate-50/50 border-t border-slate-100 flex-shrink-0 address-section">
+                <h3 class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1">
+                    <i class="fa-solid fa-map-pin"></i> Endereço
                 </h3>
-                <div class="grid grid-cols-6 gap-2">
-                    <label for="cep" class="sr-only">CEP</label>
-                    <input type="text" id="cep" placeholder="CEP" inputmode="numeric" pattern="[0-9]{8}" maxlength="9"
+                <div class="grid grid-cols-6 gap-1.5">
+                    <input type="text" id="cep" placeholder="CEP" inputmode="numeric" maxlength="9"
                         oninput="app.shipping.formatCEP(this); app.address.search(this.value)" 
-                        class="col-span-2 h-10 bg-white border border-slate-200 rounded-xl px-2.5 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
-                        aria-label="CEP para busca de endereço">
-                    <label for="bairro" class="sr-only">Bairro</label>
+                        class="col-span-2 h-9 bg-white border border-slate-200 rounded-lg px-2 text-[10px] focus:ring-2 focus:ring-blue-500/30 outline-none"
+                        aria-label="CEP">
                     <input type="text" id="bairro" placeholder="Bairro" 
-                        class="col-span-4 h-10 bg-white border border-slate-200 rounded-xl px-2.5 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
+                        class="col-span-4 h-9 bg-white border border-slate-200 rounded-lg px-2 text-[10px] focus:ring-2 focus:ring-blue-500/30 outline-none"
                         aria-label="Bairro">
-                    <label for="rua" class="sr-only">Logradouro</label>
-                    <input type="text" id="rua" placeholder="Logradouro" 
-                        class="col-span-4 h-10 bg-white border border-slate-200 rounded-xl px-2.5 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
-                        aria-label="Rua ou avenida">
-                    <label for="numero" class="sr-only">Número</label>
+                    <input type="text" id="rua" placeholder="Rua" 
+                        class="col-span-4 h-9 bg-white border border-slate-200 rounded-lg px-2 text-[10px] focus:ring-2 focus:ring-blue-500/30 outline-none"
+                        aria-label="Rua">
                     <input type="text" id="numero" placeholder="Nº" inputmode="numeric"
-                        class="col-span-2 h-10 bg-white border border-slate-200 rounded-xl px-2.5 text-xs focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 outline-none transition"
-                        aria-label="Número do endereço">
+                        class="col-span-2 h-9 bg-white border border-slate-200 rounded-lg px-2 text-[10px] focus:ring-2 focus:ring-blue-500/30 outline-none"
+                        aria-label="Número">
                 </div>
             </div>
 
-            <!-- ✅ TOTAL: SUBTOTAL + FRETE (CORREÇÃO PRINCIPAL) -->
-            <div class="p-6 border-t border-slate-100 flex-shrink-0 bg-gradient-to-t from-white to-slate-50/50">
-                <div class="space-y-2 mb-5">
-                    <div class="flex items-center justify-between text-xs">
+            <!-- ✅ TOTAL E CHECKOUT FIXO NO FUNDO -->
+            <div class="p-4 border-t border-slate-100 flex-shrink-0 bg-gradient-to-t from-white to-slate-50/50 checkout-section">
+                <div class="space-y-1.5 mb-3">
+                    <div class="flex items-center justify-between text-[10px]">
                         <span class="text-slate-500">Subtotal</span>
                         <span id="cart-subtotal" class="font-semibold">R$ 0,00</span>
                     </div>
-                    <div class="flex items-center justify-between text-xs">
+                    <div class="flex items-center justify-between text-[10px]">
                         <span class="text-slate-500">Frete</span>
                         <span id="cart-shipping" class="font-semibold text-slate-400">A calcular</span>
                     </div>
-                    <div class="border-t border-slate-200 pt-3 flex items-center justify-between">
-                        <span class="text-slate-900 font-bold text-sm">Total do Pedido</span>
-                        <span id="cart-total" class="text-2xl font-black bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent" aria-live="polite">R$ 0,00</span>
+                    <div class="border-t border-slate-200 pt-2 flex items-center justify-between">
+                        <span class="text-slate-900 font-bold text-xs">Total</span>
+                        <span id="cart-total" class="text-xl font-black bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent" aria-live="polite">R$ 0,00</span>
                     </div>
                 </div>
                 <button 
                     onclick="app.checkout.finalize()" 
-                    class="w-full h-14 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl shadow-lg shadow-green-500/30 flex items-center justify-center gap-2.5 transition active:scale-95 btn-press btn-glow"
+                    class="w-full h-12 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl shadow-lg shadow-green-500/30 flex items-center justify-center gap-2 transition active:scale-95 btn-press btn-glow"
                     aria-label="Finalizar pedido pelo WhatsApp"
                 >
-                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                    <span class="font-black uppercase tracking-wider text-sm">Finalizar no WhatsApp</span>
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span class="font-black uppercase tracking-wider text-xs">Finalizar no WhatsApp</span>
                 </button>
-                <p class="text-[9px] text-slate-400 text-center mt-3 flex items-center justify-center gap-1">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    Pagamento seguro • Entrega garantida
-                </p>
             </div>
         </div>
     </div>
@@ -1170,7 +1263,7 @@
                         return;
                     }
 
-                    // Renderiza itens do carrinho
+                    // Renderiza itens do carrinho com layout otimizado para mobile
                     DOM.cartitems.innerHTML = state.cart.map((item, idx) => `
                         <div class="flex items-center gap-3 bg-gradient-to-r from-slate-50 to-white p-3 rounded-xl border border-slate-100 animate-fade-in-up" style="animation-delay: ${idx * 50}ms" role="listitem">
                             <img src="${item.img}" alt="${item.name}" class="h-16 w-16 rounded-xl object-cover shadow-sm" loading="lazy">
@@ -1359,13 +1452,13 @@
                     
                     const zone = DOM.shippingzone;
                     if (dist <= 3) { 
-                        zone.textContent = '🎯 Zona local • Recife'; 
+                        zone.textContent = '🎯 Zona local'; 
                         zone.className = 'text-[9px] text-green-600 font-medium'; 
                     } else if (dist <= 10) { 
-                        zone.textContent = '🏙️ Zona metropolitana'; 
+                        zone.textContent = '🏙️ Metro'; 
                         zone.className = 'text-[9px] text-blue-600 font-medium'; 
                     } else { 
-                        zone.textContent = '🗺️ Zona regional'; 
+                        zone.textContent = '🗺️ Regional'; 
                         zone.className = 'text-[9px] text-orange-600 font-medium'; 
                     }
                     
@@ -1374,10 +1467,10 @@
                     const extraValue = ship.extraKm * CONFIG.SHIPPING_RULES.extraPricePerKm;
                     
                     DOM.shippingbadge.innerHTML = ship.isBase 
-                        ? `<span class="shipping-badge shipping-base">✅ Taxa base</span><span class="text-[8px] text-slate-400">Até 3km</span>`
-                        : `<span class="shipping-badge shipping-base">R$ 5,00</span><span class="shipping-badge shipping-extra">+R$ ${extraValue.toFixed(2)}</span><span class="text-[8px] text-slate-400">(${ship.extraKm}km)</span>`;
+                        ? `<span class="shipping-badge shipping-base">✅ Base</span>`
+                        : `<span class="shipping-badge shipping-base">R$ 5</span><span class="shipping-badge shipping-extra">+${extraValue.toFixed(0)}</span>`;
                     
-                    DOM.shippingdelivery.innerHTML = `<strong class="text-slate-700">${delivery.min}-${delivery.max} dia${delivery.max > 1 ? 's' : ''} úteis</strong> • ${delivery.label}`;
+                    DOM.shippingdelivery.textContent = `📅 ${delivery.min}-${delivery.max}d`;
                 },
                 
                 // ✅ FUNÇÃO PRINCIPAL CORRIGIDA COM LOGS E TRATAMENTO DE ERROS
@@ -1389,7 +1482,7 @@
                     // Validações
                     if (cep.length !== 8) { 
                         console.error('❌ CEP inválido:', cep);
-                        app.ui.showToast('CEP inválido (use 8 dígitos)', 'error'); 
+                        app.ui.showToast('CEP inválido (8 dígitos)', 'error'); 
                         return; 
                     }
                     if (state.cart.length === 0) { 
@@ -1402,7 +1495,7 @@
                     if (DOM.btncalcfrete) {
                         DOM.btncalcfrete.disabled = true; 
                         DOM.btncalcfrete.classList.add('opacity-50', 'cursor-not-allowed');
-                        DOM.btncalcfrete.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Calculando...</span>';
+                        DOM.btncalcfrete.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
                     }
                     if (DOM.shippingloading) DOM.shippingloading.classList.remove('hidden'); 
                     if (DOM.shippingresult) DOM.shippingresult.classList.add('hidden');
@@ -1449,7 +1542,7 @@
                         
                     } catch (e) {
                         console.error('💥 Erro crítico no cálculo de frete:', e);
-                        app.ui.showToast('Não foi possível calcular o frete. Tente novamente.', 'error');
+                        app.ui.showToast('Erro ao calcular frete', 'error');
                         
                         // Fallback: mostra frete base
                         state.shipping = { 
@@ -1468,7 +1561,7 @@
                         if (DOM.btncalcfrete) {
                             DOM.btncalcfrete.disabled = false; 
                             DOM.btncalcfrete.classList.remove('opacity-50', 'cursor-not-allowed');
-                            DOM.btncalcfrete.innerHTML = '<i class="fa-solid fa-calculator text-xs"></i> <span>Calcular</span>';
+                            DOM.btncalcfrete.innerHTML = '<i class="fa-solid fa-calculator text-xs"></i>';
                         }
                         if (DOM.shippingloading) DOM.shippingloading.classList.add('hidden');
                     }
